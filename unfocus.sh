@@ -2,9 +2,12 @@
 
 {
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-
 HOSTS="/etc/hosts"
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+BACKUP_HOSTS="$DIR/backup/$(date "+%y%m%d%H%M%S")_hosts.txt"
+
+COMMENT_TAG="# UNFOCUS"
 
 function help() {
     echo "\
@@ -14,26 +17,30 @@ Usage:
 $0 -h"
 }
 
-BACKUP_PATH="$DIR/backup/$(date "+%y%m%d%H%M%S")_hosts.txt"
-
 function bonk() {
     printf "\a"
 }
 
-function backup() {
-    printf "Backing up current $HOSTS to $BACKUP_PATH... "
-    cp "$HOSTS" "$BACKUP_PATH"
+function remove_blocks() {
+    printf "Removing all blocks..."
+    sed -i '' "/$COMMENT_TAG/d" "$HOSTS"
     echo "Done"
-
-    echo "$(ls backup | wc -l | xargs) backups total"
-
-    # TODO: cleanup after N files
+    echo
 }
 
-function restore() {
-    printf "Restoring $HOSTS from $BACKUP_PATH... "
-    cp "$BACKUP_PATH" "$HOSTS"
+function backup() {
+    printf "Backing up current $HOSTS to $BACKUP_HOSTS... "
+    cp "$HOSTS" "$BACKUP_HOSTS"
     echo "Done"
+    echo
+}
+
+function block() {
+    while read -r SITE; do
+        echo "Blocking $SITE"
+        echo "127.0.0.1    $SITE    $COMMENT_TAG" >> "$HOSTS"
+    done < sites.txt
+    echo
 }
 
 function wait() {
@@ -44,6 +51,8 @@ function wait() {
         ((MINUTES=MINUTES-1))
         sleep 60
     done
+
+    echo
 }
 
 if [ "$1" == '-h' ]; then
@@ -52,18 +61,9 @@ if [ "$1" == '-h' ]; then
 fi
 
 backup
-
-# block sites
-while read -r SITE; do
-    echo "Blocking $SITE"
-    echo "127.0.0.1    $SITE    #unfocus" >> "$HOSTS"
-done < sites.txt
-echo
-
+remove_blocks
 wait
-
+block
 bonk
-
-restore
 
 }
