@@ -11,7 +11,7 @@ COMMENT_TAG="# UNFOCUS"
 
 function help() {
     echo "\
-Take a lil break. It's okay!
+A tool to help cut down on time spent on Twitter, reading the news, etc.
 
 Usage:
 $0 -h"
