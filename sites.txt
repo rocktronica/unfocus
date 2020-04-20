@@ -1,3 +1,5 @@
 twitter.com
+www.twitter.com
 netflix.com
 news.google.com
+news.ycombinator.com
