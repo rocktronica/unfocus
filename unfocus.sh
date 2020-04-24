@@ -9,7 +9,7 @@ BACKUP_HOSTS="$DIR/backup/$(date "+%y%m%d%H%M%S")_hosts.txt"
 
 COMMENT_TAG="# UNFOCUS"
 
-LIST="sites.txt"
+LIST="$DIR/sites.txt"
 
 function help() {
     echo "\
