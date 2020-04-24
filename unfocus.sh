@@ -38,11 +38,25 @@ function backup() {
     echo
 }
 
+function get_list() {
+    while read -r line; do
+        first_char=$(echo $line | head -c 1)
+
+        if (
+            [ ! -z "$line" ] && # line isn't empty
+            [ "$first_char" != "#" ] # and isn't a comment
+        ); then
+            echo "$line"
+        fi
+    done < "$list"
+}
+
 function block() {
-    while read -r site; do
+    for site in $(get_list); do
         echo "Blocking $site"
         echo "127.0.0.1    $site    $comment_tag" >> "$hosts"
-    done < "$list"
+    done
+
     echo
 }
 
