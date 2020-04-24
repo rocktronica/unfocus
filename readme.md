@@ -4,8 +4,10 @@ A tool to help cut down on time spent on Twitter, reading the news, etc.
 
 ## To use
 
-1. Edit `sites.txt` with the sites you would like to spend less time on
-1. Run `sudo unfocus.sh`
+1. Run `sudo unfocus.sh` to use default list and timeout
+1. Create a new `sites.txt` with the sites you would like to spend less time on
+
+Pass `-h` flag to see other usages.
 
 ## How it works
 
@@ -25,7 +27,6 @@ Your computer's hosts file is sensitive and write-protected. That's why you need
 
 * Warn if it's already running somewhere else
 * Fail loudly if hosts file can't be edited
-* Enable variable "minutes to wait"
 * Cull backups after N files
 
 ## License
