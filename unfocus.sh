@@ -20,9 +20,9 @@ A tool to help cut down on time spent on Twitter, reading the news, etc.
 
 Usage:
 $0 -h        # shows help, exits
-$0 list      # list sites to be blocked
-$0 refresh   # refreshes blocked sites immediately
-$0 edit      # opens default editor to edit sites list"
+$0 -ls       # list sites to be blocked
+$0 -r        # refreshes blocked sites immediately
+$0 -e        # edit sites list with default editor"
 }
 
 function bonk() {
@@ -94,13 +94,13 @@ if [ -z "$command" ]; then
     bonk
 elif [ "$command" == '-h' ]; then
     help
-elif [ "$command" == 'list' ]; then
+elif [ "$command" == '-ls' ]; then
     get_list
-elif [ "$command" == 'refresh' ]; then
+elif [ "$command" == '-r' ]; then
     backup
     remove_blocks
     block
-elif [ "$command" == 'edit' ]; then
+elif [ "$command" == '-e' ]; then
     edit
 else
     echo "Unkown command: $command"
