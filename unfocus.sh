@@ -17,6 +17,7 @@ A tool to help cut down on time spent on Twitter, reading the news, etc.
 
 Usage:
 $0 -h        # shows help, exits
+$0 list      # list blocked sites
 $0 edit      # opens default editor to edit sites list"
 }
 
@@ -75,10 +76,10 @@ if [ -z "$COMMAND" ]; then
     bonk
 elif [ "$COMMAND" == '-h' ]; then
     help
-    exit
+elif [ "$COMMAND" == 'list' ]; then
+    cat "$LIST"
 elif [ "$COMMAND" == 'edit' ]; then
     edit
-    exit
 else
     echo "Unkown command: $COMMAND"
 fi
