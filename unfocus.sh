@@ -6,7 +6,11 @@ hosts="/etc/hosts"
 
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 backup_hosts="$dir/backup/$(date "+%y%m%d%H%M%S")_hosts.txt"
-list="$dir/sites.txt"
+
+list="$dir/sites_example.txt"
+if test -f "$dir/sites.txt"; then
+    list="$dir/sites.txt"
+fi
 
 comment_tag="# UNFOCUS"
 
