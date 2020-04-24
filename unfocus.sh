@@ -16,7 +16,8 @@ A tool to help cut down on time spent on Twitter, reading the news, etc.
 
 Usage:
 $0 -h        # shows help, exits
-$0 list      # list blocked sites
+$0 list      # list sites to be blocked
+$0 block     # immediately blocks sites
 $0 edit      # opens default editor to edit sites list"
 }
 
@@ -91,6 +92,8 @@ elif [ "$command" == '-h' ]; then
     help
 elif [ "$command" == 'list' ]; then
     cat "$list"
+elif [ "$command" == 'block' ]; then
+    block
 elif [ "$command" == 'edit' ]; then
     edit
 else
