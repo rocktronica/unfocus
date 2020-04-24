@@ -95,7 +95,7 @@ if [ -z "$command" ]; then
 elif [ "$command" == '-h' ]; then
     help
 elif [ "$command" == 'list' ]; then
-    cat "$list"
+    get_list
 elif [ "$command" == 'refresh' ]; then
     backup
     remove_blocks
