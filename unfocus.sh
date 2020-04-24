@@ -2,14 +2,13 @@
 
 {
 
-HOSTS="/etc/hosts"
+hosts="/etc/hosts"
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-BACKUP_HOSTS="$DIR/backup/$(date "+%y%m%d%H%M%S")_hosts.txt"
+dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+backup_hosts="$dir/backup/$(date "+%y%m%d%H%M%S")_hosts.txt"
+list="$dir/sites.txt"
 
-COMMENT_TAG="# UNFOCUS"
-
-LIST="$DIR/sites.txt"
+comment_tag="# UNFOCUS"
 
 function help() {
     echo "\
@@ -27,32 +26,32 @@ function bonk() {
 
 function remove_blocks() {
     printf "Removing all blocks..."
-    sed -i '' "/$COMMENT_TAG/d" "$HOSTS"
+    sed -i '' "/$comment_tag/d" "$hosts"
     echo "Done"
     echo
 }
 
 function backup() {
-    printf "Backing up current $HOSTS to $BACKUP_HOSTS... "
-    cp "$HOSTS" "$BACKUP_HOSTS"
+    printf "Backing up current $hosts to $backup_hosts... "
+    cp "$hosts" "$backup_hosts"
     echo "Done"
     echo
 }
 
 function block() {
-    while read -r SITE; do
-        echo "Blocking $SITE"
-        echo "127.0.0.1    $SITE    $COMMENT_TAG" >> "$HOSTS"
-    done < "$LIST"
+    while read -r site; do
+        echo "Blocking $site"
+        echo "127.0.0.1    $site    $comment_tag" >> "$hosts"
+    done < "$list"
     echo
 }
 
 function wait() {
-    MINUTES=5
+    minutes=5
 
-    while [ $MINUTES -gt 0 ]; do
-        echo "$MINUTES minutes left"
-        ((MINUTES=MINUTES-1))
+    while [ $minutes -gt 0 ]; do
+        echo "$minutes minutes left"
+        ((minutes=minutes-1))
         sleep 60
     done
 
@@ -61,27 +60,27 @@ function wait() {
 
 function edit() {
     if [ -z "$EDITOR" ]; then
-        open  "$LIST"
+        open  "$list"
     else
-        $EDITOR "$LIST"
+        $EDITOR "$list"
     fi
 }
 
-COMMAND="$1"
-if [ -z "$COMMAND" ]; then
+command="$1"
+if [ -z "$command" ]; then
     backup
     remove_blocks
     wait
     block
     bonk
-elif [ "$COMMAND" == '-h' ]; then
+elif [ "$command" == '-h' ]; then
     help
-elif [ "$COMMAND" == 'list' ]; then
-    cat "$LIST"
-elif [ "$COMMAND" == 'edit' ]; then
+elif [ "$command" == 'list' ]; then
+    cat "$list"
+elif [ "$command" == 'edit' ]; then
     edit
 else
-    echo "Unkown command: $COMMAND"
+    echo "Unkown command: $command"
 fi
 
 }
