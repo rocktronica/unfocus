@@ -13,12 +13,15 @@ if test -f "$dir/sites.txt"; then
 fi
 
 comment_tag="# UNFOCUS"
+default_minutes="5"
 
 function help() {
     echo "\
 A tool to help cut down on time spent on Twitter, reading the news, etc.
 
 Usage:
+$0           # allow $default_minutes of unfocus time
+$0 15        # ^ but 15 minutes, etc
 $0 -h        # shows help, exits
 $0 -ls       # list sites to be blocked
 $0 -r        # refreshes blocked sites immediately
@@ -66,7 +69,7 @@ function block() {
 }
 
 function wait() {
-    minutes=5
+    minutes="$1"
 
     while [ $minutes -gt 0 ]; do
         echo "$minutes minutes left"
@@ -85,11 +88,13 @@ function edit() {
     fi
 }
 
+number_pattern='^[0-9]+$'
 command="$1"
-if [ -z "$command" ]; then
+
+if [ -z "$command" ] || [[ "$1" =~ $number_pattern ]]; then
     backup
     remove_blocks
-    wait
+    wait "${1:-$default_minutes}"
     block
     bonk
 elif [ "$command" == '-h' ]; then
