@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Exit on error
+set -o errexit
+set -o errtrace
+
 {
 
 hosts="/etc/hosts"
