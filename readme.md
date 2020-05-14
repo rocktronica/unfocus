@@ -2,6 +2,8 @@
 
 A tool to help cut down on time spent on Twitter, reading the news, etc.
 
+[Blog post](https://blog.tommy.sh/posts/unfocus/)
+
 ## To use
 
 1. Run `sudo unfocus.sh` to use default list and timeout
