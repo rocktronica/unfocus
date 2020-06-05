@@ -98,6 +98,7 @@ command="$1"
 if [ -z "$command" ] || [[ "$1" =~ $number_pattern ]]; then
     backup
     remove_blocks
+    trap block EXIT
     wait "${1:-$default_minutes}"
     block
     bonk
